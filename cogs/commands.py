@@ -15,7 +15,7 @@ class Commands(commands.Cog):
     @commands.command(aliases=['czy_zdam_sysopa?', 'panie_profesorze_czy_zdam_sysopa?', 'czy_on_zda?', 'czy_zdam?'])
     async def czy_zdam(self, ctx, student = ''):
         responses = ['Jasne!!!', 'Zobaczymy', 'Raczej bym się nie spodziewał', 'Chwila chwila, spokojnie, to się okaże', 'Ty? Haha']
-        responses_student = [f'{student} oj z nim to może być ciężko', f'{student} no on to jest ciekawy przypadek', f'{student} napewno ma większe szanse niż pan, panie']
+        responses_student = [f'{student} oj z nim to może być ciężko', f'{student} no on to jest ciekawy przypadek', f'{student} napewno ma większe szanse niż pan, panie {str(ctx.author)[:-5]}']
         if student=='':
             await ctx.send(random.choice(responses))
         else:
@@ -53,12 +53,19 @@ class Commands(commands.Cog):
             #print(f'Nie ma takiego użytkownika proszę Pana, może już zakończył tą edycję kursu?')
         await ctx.send(str(discord.ext.commands.errors.BadArgument))
 
-    @commands.command(help = 'Zmienia status Imperatora\nSkładnia: "[prefix] atrybut nazwa_statusu"\natrybut 1 - gra, 2 - film')
-    async def status(self, ctx, atrybut, *, status):
+    @commands.command(help = 'Zmienia status Imperatora\nSkładnia: "[Prefix] status atrybut nazwa_statusu"\natrybut 1 - gra, 2 - film (Must be an integer)')
+    async def status(self, ctx, atrybut : int, *, status):
         if int(atrybut)==1:
             await self.client.change_presence(activity = discord.Game(status))
         if int(atrybut)==2:
             await self.client.change_presence(activity = discord.Activity(type=discord.ActivityType.watching, name = status))
+
+    @status.error
+    async def status_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(f'Podaj wszytskie wymagane argumenty, po więcej informacji użyj --> [Prefix] help status')
+        if isinstance(error, commands.BadArgument):
+            await ctx.send(f'Podaj odpowiedni typ argumentu, po więcej informacji użyj --> [Prefix] help status')
         
 
 def setup(client):
