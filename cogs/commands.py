@@ -1,6 +1,9 @@
 import discord, random
 from discord.ext import commands
 from time import sleep
+# from discord.voice_client import VoiceClient
+from discord.utils import get
+from discord import FFmpegPCMAudio
 
 class Commands(commands.Cog):
 
@@ -59,6 +62,40 @@ class Commands(commands.Cog):
             await self.client.change_presence(activity = discord.Game(status))
         if int(atrybut)==2:
             await self.client.change_presence(activity = discord.Activity(type=discord.ActivityType.watching, name = status))
+
+    @commands.command()
+    async def join(self, ctx):
+        channel = ctx.message.author.voice.channel
+        voice = get(self.client.voice_clients, guild=ctx.guild)
+        if voice and voice.is_connected():
+           await voice.move_to(channel)
+        else:
+            voice = await channel.connect()
+            source = FFmpegPCMAudio(executable = r"C:\Users\micha\Downloads\ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\exec.m4a')
+            voice.play(source)
+            # player.start()
+
+    # @commands.command()
+    # async def join(self, ctx):
+    #     channel = ctx.message.author.voice.channel
+    #     await channel.connect()
+        
+    @commands.command()
+    async def egzekucja(self, ctx):
+        channel = ctx.message.author.voice.channel
+        voice = get(self.client.voice_clients, guild=ctx.guild)
+        if voice and voice.is_connected():
+           await voice.move_to(channel)
+        else:
+            voice = await channel.connect()
+            source = FFmpegPCMAudio(executable = r"C:\Users\micha\Downloads\ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\exec.m4a')
+            voice.play(source)
+        sleep(4)
+        await ctx.voice_client.disconnect()
+
+    @commands.command()
+    async def leave(self, ctx):
+        await ctx.voice_client.disconnect()
 
     @status.error
     async def status_error(self, ctx, error):
