@@ -71,10 +71,12 @@ class Commands(commands.Cog):
            await voice.move_to(channel)
         else:
             voice = await channel.connect()
-            source = FFmpegPCMAudio(executable = r"C:\Users\micha\Downloads\ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\exec.m4a')
+            source = FFmpegPCMAudio(executable = r"C:\Users\micha\Downloads\ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\imperial.m4a')
             voice.play(source)
+            await ctx.send(f'Here I come  😈')
             # player.start()
 
+    # DZIAŁA ALE NARAZIE NIE POTRZEBNE
     # @commands.command()
     # async def join(self, ctx):
     #     channel = ctx.message.author.voice.channel
@@ -84,8 +86,9 @@ class Commands(commands.Cog):
     async def egzekucja(self, ctx):
         channel = ctx.message.author.voice.channel
         voice = get(self.client.voice_clients, guild=ctx.guild)
+        await ctx.send(f'Egzekucja:\n1. «wykonanie wyroku śmierci»\n2. «przymusowe ściągnięcie należności»\n3. «wykonanie np. uchwał sejmowych lub innych aktów prawnych»')
         if voice and voice.is_connected():
-           await voice.move_to(channel)
+            await voice.move_to(channel)
         else:
             voice = await channel.connect()
             source = FFmpegPCMAudio(executable = r"C:\Users\micha\Downloads\ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\exec.m4a')
@@ -103,7 +106,11 @@ class Commands(commands.Cog):
             await ctx.send(f'Podaj wszytskie wymagane argumenty, po więcej informacji użyj --> [Prefix] help status')
         if isinstance(error, commands.BadArgument):
             await ctx.send(f'Podaj odpowiedni typ argumentu, po więcej informacji użyj --> [Prefix] help status')
-        
+    
+    @egzekucja.error
+    async def egzekucja_error(self, ctx, error):
+        if isinstance(error, Exception):
+            await ctx.send(f'Panie {str(ctx.author)[:-5]} nie jest Pan podłączony do żadnego kanału głosowego!!! Myślisz, że się dam zrobić?')
 
 def setup(client):
     client.add_cog(Commands(client))
