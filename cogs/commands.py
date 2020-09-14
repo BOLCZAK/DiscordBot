@@ -100,6 +100,10 @@ class Commands(commands.Cog):
     async def leave(self, ctx):
         await ctx.voice_client.disconnect()
 
+    @commands.command(aliases = ['podrzuć_fedorkę'])
+    async def podrzuc_fedorke(self, ctx):
+        await ctx.send(f"Jasne, proszę bardzo:\nhttps://getfedora.org/pl/")
+
     @status.error
     async def status_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
