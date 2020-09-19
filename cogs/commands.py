@@ -71,7 +71,7 @@ class Commands(commands.Cog):
            await voice.move_to(channel)
         else:
             voice = await channel.connect()
-            source = FFmpegPCMAudio(executable = r"C:\Users\micha\Downloads\ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\imperial.m4a')
+            source = FFmpegPCMAudio(executable = r"ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\imperial.m4a')
             voice.play(source)
             await ctx.send(f'Here I come  😈')
             # player.start()
@@ -91,7 +91,7 @@ class Commands(commands.Cog):
             await voice.move_to(channel)
         else:
             voice = await channel.connect()
-            source = FFmpegPCMAudio(executable = r"C:\Users\micha\Downloads\ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\exec.m4a')
+            source = FFmpegPCMAudio(executable = r"ffmpeg-win-2.2.2\ffmpeg.exe", source = r'assets\exec.m4a')
             voice.play(source)
         sleep(4)
         await ctx.voice_client.disconnect()
