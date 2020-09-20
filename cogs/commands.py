@@ -104,6 +104,17 @@ class Commands(commands.Cog):
     async def podrzuc_fedorke(self, ctx):
         await ctx.send(f"Jasne, proszę bardzo:\nhttps://getfedora.org/pl/")
 
+    @commands.command()
+    async def drasw_terminal(self, ctx):
+        await ctx.send(f'|-------------------------------------------------------|')
+        await ctx.send(f'|[atomek@localhost ~]$                                              |')
+        await ctx.send(f'|                                                                                         |')
+        await ctx.send(f'|                                                                                         |')
+        await ctx.send(f'|                                                                                         |')
+        await ctx.send(f'|                                                                                         |')
+        await ctx.send(f'|-------------------------------------------------------|')
+
+
     @status.error
     async def status_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
